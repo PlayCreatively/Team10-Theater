@@ -10,7 +10,6 @@ static float EaseInOut(float t)
 
 void UDisplacementBase::TickDisplacement(float DeltaTime)
 {
-	GEngine->AddOnScreenDebugMessage(2, 5.f, FColor::Red, FString::Printf(TEXT("IsDisplacing: %d"), isDisplacing));
 	if (isDisplacing)
 	{
 		curTime += DeltaTime * direction;
@@ -20,18 +19,15 @@ void UDisplacementBase::TickDisplacement(float DeltaTime)
 			t = 1.0f;
 			curTime = Time;
 			isDisplacing = false;
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "target reached!");
 		}
 		else if (direction == -1 && t <= 0.0f)
 		{
 			t = 0.0f;
 			curTime = 0.0f;
 			isDisplacing = false;
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "target reached!");
 		}
 		float ease = EaseInOut(t);
 		FVector newPos = startPos + Displacement * ease;
-		GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, FString::Printf(TEXT("Displacement: %s"), *(Displacement * ease).ToString()));
 		SetRelativeLocation(newPos);
 	}
 }
